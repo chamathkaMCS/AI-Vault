@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AI Vault</title>
     <style>
+      html,
       body {
-        font-family: "Poppins", sans-serif;
         margin: 0;
         padding: 0;
-        height: 100vh;
+        min-height: 100vh;
+        height: 100dvh; /* better for mobile view */
         display: flex;
         flex-direction: column;
+        font-family: "Poppins", sans-serif;
         background: linear-gradient(135deg, #0d1b2a, #476a80);
         color: #e0e0e0;
       }
@@ -29,7 +31,7 @@
       .heading {
         font-size: 2.5em;
         font-weight: bold;
-        color: rgba(255, 255, 255, 0.12);
+        color: rgba(255, 255, 255, 0.5); /* increased opacity */
         text-align: center;
         margin-bottom: 60px;
         line-height: 1.2;
@@ -85,11 +87,11 @@
 
       .help-link {
         display: inline-block;
-        color: #ffffff; /* white text */
-        font-size: 0.9em; /* smaller */
+        color: #ffffff;
+        font-size: 0.9em;
         font-weight: 500;
-        margin-top: 8px; /* minimal spacing */
-        text-decoration: none; /* no underline */
+        margin-top: 8px;
+        text-decoration: none;
         cursor: pointer;
         transition: 0.3s;
       }
@@ -217,7 +219,7 @@
 
       @media (max-width: 600px) {
         .heading {
-          font-size: 2em;
+          font-size: 1.8em;
           margin-bottom: 30px;
         }
 
