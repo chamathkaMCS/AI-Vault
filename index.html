@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Vault</title>
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background: linear-gradient(135deg, #0d1b2a, #476a80);
+        color: #e0e0e0;
+      }
+
+      .main-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+
+      .heading {
+        font-size: 3em;
+        font-weight: bold;
+        color: rgba(255, 255, 255, 0.15);
+        text-align: center;
+        margin-bottom: 120px;
+        line-height: 1.2;
+      }
+
+      .container {
+        background: #1f2937;
+        border-radius: 20px;
+        padding: 40px 20px;
+        max-width: 450px;
+        width: 100%;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+        text-align: center;
+        box-sizing: border-box;
+      }
+
+      .container h1 {
+        font-size: 1.5em;
+        margin-bottom: 25px;
+        color: #e0e0e0;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 12px 15px;
+        border-radius: 10px;
+        border: 1px solid #555;
+        outline: none;
+        font-size: 1em;
+        margin-bottom: 20px;
+        background: #111827;
+        color: #e0e0e0;
+        box-sizing: border-box;
+      }
+
+      button {
+        background: linear-gradient(90deg, #4a90e2, #357abd);
+        color: #fff;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 10px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+        width: 100%;
+        max-width: 200px;
+      }
+
+      button:hover {
+        background: linear-gradient(90deg, #357abd, #4a90e2);
+        transform: scale(1.05);
+      }
+
+      .loading {
+        margin-top: 20px;
+        display: none;
+        font-size: 1em;
+        color: #4a90e2;
+      }
+
+      .loader {
+        border: 4px solid rgba(255, 255, 255, 0.1);
+        border-top: 4px solid #4a90e2;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        animation: spin 1s linear infinite;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 10px;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .result {
+        margin-top: 25px;
+        font-size: 1.1em;
+        color: #e0e0e0;
+        word-break: break-word;
+      }
+
+      .result a {
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      footer {
+        text-align: center;
+        font-size: 0.9em;
+        opacity: 0.8;
+        padding: 10px 0;
+        background: transparent;
+      }
+
+      @media (max-width: 600px) {
+        .heading {
+          font-size: 2em;
+          margin-bottom: 30px;
+        }
+
+        .container {
+          padding: 30px 15px;
+        }
+
+        button {
+          max-width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-content">
+      <div class="heading">
+        Have you exceeded your AI file upload limit?<br />
+        Don’t worry—I’m here to help.
+      </div>
+
+      <div class="container">
+        <h1>Upload your file to AI Vault</h1>
+        <input
+          type="text"
+          id="driveLink"
+          placeholder="Enter your Drive link here"
+        />
+        <button id="uploadBtn">Upload File</button>
+
+        <div class="loading" id="loading">
+          <span class="loader"></span>Processing...
+        </div>
+
+        <div class="result" id="result"></div>
+      </div>
+    </div>
+
+    <footer>
+      Created with 💚 by
+      <a
+        href="https://wa.me/94717696320"
+        target="_blank"
+        style="text-decoration: none; color: #ffffff"
+        ;
+        >Chamathka_MCS</a
+      >
+    </footer>
+
+    <script>
+      const uploadBtn = document.getElementById("uploadBtn");
+      const loadingDiv = document.getElementById("loading");
+      const resultDiv = document.getElementById("result");
+
+      uploadBtn.addEventListener("click", () => {
+        const input = document.getElementById("driveLink").value.trim();
+        if (!input) {
+          resultDiv.innerHTML = "Please enter a Google Drive link.";
+          return;
+        }
+
+        resultDiv.innerHTML = "";
+        loadingDiv.style.display = "block";
+
+        setTimeout(() => {
+          loadingDiv.style.display = "none";
+          const match = input.match(/\/d\/([^/]+)\//);
+
+          if (match && match[1]) {
+            const fileId = match[1];
+            const newLink = `https://drive.google.com/uc?export=download&id=${fileId}`;
+            resultDiv.innerHTML = `Your file uploaded <a id="copyLink">click here</a> to copy the link`;
+
+            const copyLink = document.getElementById("copyLink");
+            copyLink.addEventListener("click", () => {
+              navigator.clipboard.writeText(newLink).then(() => {
+                copyLink.textContent = "Copied";
+                setTimeout(() => {
+                  copyLink.textContent = "click here";
+                }, 2000);
+              });
+            });
+          } else {
+            resultDiv.innerHTML = "Invalid Google Drive link format.";
+          }
+        }, 1500);
+      });
+    </script>
+  </body>
+</html>
